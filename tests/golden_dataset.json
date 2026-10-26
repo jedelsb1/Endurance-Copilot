@@ -1,0 +1,76 @@
+{
+  "dataset_name": "Endurance Copilot Golden Benchmark Dataset (v3.5)",
+  "description": "Static evaluation benchmark cases measuring triage accuracy, RED-S safety gating, multi-agent coordination, model routing, and guardrail enforcement.",
+  "cases": [
+    {
+      "case_id": "GOLDEN_01_STAY_THE_COURSE_OPTIMAL",
+      "description": "Balanced autonomic HRV, low soreness, symmetrical GCT -> STAY_THE_COURSE",
+      "input_metrics": {
+        "leg_soreness_score": 3,
+        "oura_hrv_ms": 40.5,
+        "oura_baseline_hrv_ms": 42.0,
+        "gct_deviation_pct": 0.4,
+        "hr_decoupling_pct": 3.5,
+        "consecutive_asymmetry_runs": 0
+      },
+      "expected_triage_verdict": "STAY_THE_COURSE",
+      "expected_reds_deficit_permitted": true
+    },
+    {
+      "case_id": "GOLDEN_02_DOWNSHIFT_HRV_DROP_REDS_ABORT",
+      "description": "Oura HRV drop > 15% (31ms vs 42ms baseline = 26.2% drop) -> DOWNSHIFT and abort caloric deficit",
+      "input_metrics": {
+        "leg_soreness_score": 4,
+        "oura_hrv_ms": 31.0,
+        "oura_baseline_hrv_ms": 42.0,
+        "gct_deviation_pct": 0.6,
+        "hr_decoupling_pct": 5.8,
+        "consecutive_asymmetry_runs": 1
+      },
+      "expected_triage_verdict": "DOWNSHIFT",
+      "expected_reds_deficit_permitted": false
+    },
+    {
+      "case_id": "GOLDEN_03_DOWNSHIFT_MULTI_DAY_GCT_ASYMMETRY",
+      "description": "GCT balance shift > 1.0% across 3 consecutive runs -> DOWNSHIFT",
+      "input_metrics": {
+        "leg_soreness_score": 3,
+        "oura_hrv_ms": 41.0,
+        "oura_baseline_hrv_ms": 42.0,
+        "gct_deviation_pct": 1.4,
+        "hr_decoupling_pct": 2.4,
+        "consecutive_asymmetry_runs": 3
+      },
+      "expected_triage_verdict": "DOWNSHIFT",
+      "expected_reds_deficit_permitted": false
+    },
+    {
+      "case_id": "GOLDEN_04_STEP_UP_COUPLED_AEROBIC_ECONOMY",
+      "description": "HR decoupling < 3%, GCT deviation < 1.0%, HRV drop <= 3%, soreness <= 2 -> STEP_UP (+0.5 VDOT)",
+      "input_metrics": {
+        "leg_soreness_score": 1,
+        "oura_hrv_ms": 43.0,
+        "oura_baseline_hrv_ms": 42.0,
+        "gct_deviation_pct": 0.3,
+        "hr_decoupling_pct": 1.8,
+        "consecutive_asymmetry_runs": 0
+      },
+      "expected_triage_verdict": "STEP_UP",
+      "expected_reds_deficit_permitted": true
+    },
+    {
+      "case_id": "GOLDEN_05_DOWNSHIFT_ACUTE_SORENESS_GATE",
+      "description": "Soreness >= 6/10 triggers immediate DOWNSHIFT and RED-S caloric deficit abort",
+      "input_metrics": {
+        "leg_soreness_score": 7,
+        "oura_hrv_ms": 41.5,
+        "oura_baseline_hrv_ms": 42.0,
+        "gct_deviation_pct": 0.8,
+        "hr_decoupling_pct": 2.9,
+        "consecutive_asymmetry_runs": 0
+      },
+      "expected_triage_verdict": "DOWNSHIFT",
+      "expected_reds_deficit_permitted": false
+    }
+  ]
+}

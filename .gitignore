@@ -1,0 +1,25 @@
+# Virtual environment & Python cache
+.venv/
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Secrets & OAuth tokens
+.env
+oura.env
+knowledge/garmin_tokens/
+knowledge/garmin_mfa_code.txt
+knowledge/oura_oauth_tokens.json
+knowledge/strava_oauth_tokens.json
+.terraform/
+*.tfstate
+*.tfstate.backup
+
+# OS & Logs
+.DS_Store
+uvicorn.log
+server.log
+*.log
+knowledge/*.db-wal
+knowledge/*.db-shm
